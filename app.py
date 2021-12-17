@@ -21,10 +21,10 @@ def predict():
     
     if prediction[0] == 1:
         output = "Positive"
-        confidence_score = (confidence_score[0][1]* 100)
+        confidence_score = round(confidence_score[0][1]* 100, 2)
     else:
         output = "Negative"
-        confidence_score = (confidence_score[0][0]* 100)
+        confidence_score = round(confidence_score[0][0]* 100, 2)
     return render_template('index.html', prediction_text=output,
                           confidence_score_text=confidence_score)
 
