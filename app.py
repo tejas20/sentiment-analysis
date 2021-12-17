@@ -23,9 +23,10 @@ def predict():
     else:
         output = "Negative"
         
-    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output),
-                          confidence_score_text='Employee Salary should be $ {}'.format(confidence_score))
+    return render_template('index.html', prediction_text=output,
+                          confidence_score_text=confidence_score)
 
     
 if __name__ == "__main__":
     app.run(debug=True)
+    app.config["DEBUG"]=True
