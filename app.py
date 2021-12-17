@@ -4,7 +4,8 @@ import pickle
 
 app = Flask(__name__)
 model = pickle.load(open('best_model.pkl', 'rb'))
-tv_lr_model = pickle.load(open('LR_model.pkl', 'rb'))
+#tv_lr_model = pickle.load(open('LR_model.pkl', 'rb'))
+cv_lr_model = pickle.load(open('cv_model.pkl', 'rb'))
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -14,7 +15,7 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    input = tv_lr_model.transform([request.form['ReviewText']]).toarray() 
+    input = cv_lr_model.transform([request.form['ReviewText']]).toarray() 
     prediction = model.predict(input)
     confidence_score = model.predict_proba(input)
     
