@@ -4,7 +4,7 @@ import pickle
 
 app = Flask(__name__)
 model = pickle.load(open('best_model.pkl', 'rb'))
-
+tv_lr_model = pickle.load(open('LR_model.pkl', 'rb'))
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -14,14 +14,18 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
+    input = tv_lr_model.transform([request.form['ReviewText']]).toarray() 
+    prediction = model.predict(input)
+    confidence_score = model.predict_proba(input)
+    
+    if prediction[0] == 1:
+        output = "Positive"
+    else:
+        output = "Negative"
+        
+    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output),
+                          confidence_score_text='Employee Salary should be $ {}'.format(confidence_score))
 
-    output = round(prediction[0], 2)
-
-    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
-
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
