@@ -1,7 +1,7 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
-
+# Reference source: krishnaik06 (2021). krishnaik06/Heroku-Demo. [online] GitHub. Available at: https://github.com/krishnaik06/Heroku-Demo [Accessed 17 Dec. 2021].
 app = Flask(__name__)
 model = pickle.load(open('best_model.pkl', 'rb'))
 #tv_lr_model = pickle.load(open('LR_model.pkl', 'rb'))
